@@ -28,19 +28,20 @@ public class EmployeeController {
     }
 
     @GetMapping("/create")
-    public String renderCreateEmployeePage() {
+    public String renderCreateEmployeePage(Model model) {
+        model.addAttribute("employee", new Employee());
         return "employees/create";
     }
 
     @PostMapping("/create")
-    public String createEmployee(Employee employee) {
+    public String createEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.createEmployee(employee);
+        System.out.println(employee.isStatus());
         return "redirect:/employees";
     }
 
     @GetMapping("/{id}/update")
     public String renderUpdateEmployeePage(@PathVariable("id") Long id, Model model) {
-        System.out.println("1");
         Employee employee = employeeService.findEmployeeById(id);
         model.addAttribute("employee", employee);
         return "employees/update";
@@ -59,12 +60,13 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
-    @GetMapping("/{keyword}/search")
-    public String SearchEmployee(String keyword, Model model) {
-        List<Employee> employees = employeeService.findEmployeesByName(keyword);
+    @GetMapping("/search")
+    public String SearchEmployee(@RequestParam String keyword, Model model) {
+        List<Employee> employees = employeeService.findEmployeesByNameOrPhoneNumber(keyword);
         model.addAttribute("employees", employees);
         return "employees/list";
     }
+
     @GetMapping("/{id}/full")
     public String customersFull(@PathVariable("id") Long id, Model model) {
         Employee employee = employeeService.findEmployeeById(id);
@@ -72,12 +74,6 @@ public class EmployeeController {
         return "customers/full";
     }
 
-//    @GetMapping("/search")
-//    public String searchEmployee(String keyword, Model model) {
-//        List<Employee> employees = employeeService.findEmployeesByNameOrPhoneNumber(keyword);
-//        model.addAttribute("employees", employees);
-//        return "customers/list";
-//    }
 
     @GetMapping("/{id}/book")
     public String bookEmployee(@PathVariable("id") long id) {

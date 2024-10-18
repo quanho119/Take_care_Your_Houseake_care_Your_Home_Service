@@ -45,8 +45,8 @@ public class EmployeeService implements IEmployeeService {
         return this.employeeRepository.findByNameContaining(keyword);
     }
 
-//    @Override
-//    public List<Employee> findEmployeesByNameOrPhoneNumber(String keyword){
-//        return this.employeeRepository.findByPhoneNumberContainingOrNameContaining(keyword);
-//    }
+    @Override
+    public List<Employee> findEmployeesByNameOrPhoneNumber(String keyword){
+        return this.employeeRepository.findByPhoneNumberContainingOrNameContaining(keyword,keyword);
+    }
 }

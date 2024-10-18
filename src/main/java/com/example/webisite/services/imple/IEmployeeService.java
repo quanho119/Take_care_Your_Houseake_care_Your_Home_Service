@@ -17,6 +17,6 @@ public interface IEmployeeService {
 
     List<Employee> findEmployeesByName(String keyword);
 
-//    List<Employee> findEmployeesByNameOrPhoneNumber(String keyword);
+    List<Employee> findEmployeesByNameOrPhoneNumber(String keyword);
 
 }
