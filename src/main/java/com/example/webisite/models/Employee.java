@@ -1,6 +1,8 @@
 package com.example.webisite.models;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "employee")
@@ -11,6 +13,7 @@ public class Employee {
     private Long id;
     @Column(name = "username")
     private String name;
+    @NotEmpty
     private String password;
     @Column(name = "full_name")
     private String fullName;

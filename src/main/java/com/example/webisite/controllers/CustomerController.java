@@ -32,12 +32,12 @@ public class CustomerController {
         return "customers/full";
     }
 
-//    @GetMapping("/search")
-//    public String searchEmployee(String keyword, Model model) {
-//        List<Employee> employees = employeeService.findEmployeesByNameOrPhoneNumber(keyword);
-//        model.addAttribute("employees", employees);
-//        return "customers/list";
-//    }
+    @GetMapping("/search")
+    public String searchEmployee(String keyword, Model model) {
+        List<Employee> employees = employeeService.findEmployeesByNameOrPhoneNumber(keyword);
+        model.addAttribute("employees", employees);
+        return "customers/list";
+    }
 
     @GetMapping("/{id}/book")
     public String bookEmployee(long id) {

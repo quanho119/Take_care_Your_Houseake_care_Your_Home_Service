@@ -6,22 +6,56 @@
 </head>
 <body>
 <h2>employees list</h2>
+<form action="/employees/search" method="get">
+    <label for="keyword">Search:</label>
+    <br>
+    <input type="text" id="keyword" name="keyword">
+    <input type="submit" value="Search">
+</form>
+<br>
+<a href="/employees/create">Create</a>
 <table>
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Full Name</th>
+        <th>Phone Number</th>
         <th>Email</th>
+        <th>Address</th>
+        <th>Bio</th>
+        <th>Hourly Rate</th>
+        <th>Status</th>
         <th>Actions</th>
+        <th>Booking</th>
     </tr>
-    <tr th:each="employee: ${employees}">
-        <td th:text="${employee.id}"></td>
+
+    <tr th:each="employee, iterStat : ${employees}">
+        <td th:text="${iterStat.index + 1}"></td>
         <td th:text="${employee.name}"></td>
+        <td th:text="${employee.fullName}"></td>
+        <td th:text="${employee.phoneNumber}"></td>
         <td th:text="${employee.email}"></td>
+        <td th:text="${employee.address}"></td>
+        <td th:text="${employee.bio}"></td>
+        <td th:text="${employee.hourlyRate}+'$/hour'"></td>
+        <td th:text="${employee.status ? 'Active' : 'Inactive'}"></td>
         <td>
             <a th:href="@{/employees/{id}/update(id=${employee.id})}">Update</a> |
             <a th:href="@{/employees/{id}/delete(id=${employee.id})}">Delete</a>
         </td>
+        <td th:switch="${employee.status}">
+            <span th:case="true">
+                <a th:href="@{/employees/{id}/book(id=${employee.id})}">Book</a>
+            </span>
+            <span th:case="false">
+                <a th:href="@{/employees/{id}/activate(id=${employee.id})}">Cancel</a>
+            </span>
+            <span th:case="*">
+                <span>Unknown Status</span>
+            </span>
+        </td>
     </tr>
+
 </table>
 </body>
 </html>
