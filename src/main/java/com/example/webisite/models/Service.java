@@ -3,6 +3,8 @@ package com.example.webisite.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.List;
+
 @Entity
 @Table(name = "services")
 public class Service {
@@ -43,4 +45,7 @@ public class Service {
     @Column(name = "description")
     @NotEmpty
     private String description;
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    private List<Booking> bookings;
 }

@@ -4,6 +4,8 @@ import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.List;
+
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -25,6 +27,9 @@ public class Employee {
     @Column(name = "hourly_rate")
     private Double hourlyRate;
     private boolean status; // "available" or "unavailable"
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Booking> bookings;
 
     public Long getId() {
         return id;
@@ -105,5 +110,13 @@ public class Employee {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

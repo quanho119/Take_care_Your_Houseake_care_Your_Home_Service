@@ -3,8 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script th:src="@{/js/home.js}"></script>
 </head>
 <body>
-<h2>home</h2>
+
+<header>
+    <img class="logo" th:src="@{/image/logo.png}" alt="Logo">
+    <h2>NHÀN TÊNH</h2>
+    <nav>
+        <a th:href="@{/home}">TRANG CHỦ</a>
+        <a th:href="@{/employees}">NHÂN VIÊN</a>
+        <a href="#" onclick="confirmLogout()">
+            <i class="fas fa-sign-out-alt" style="color: white;"></i>
+        </a>
+    </nav>
+</header>
+
+<main>
+    <section class="form-apply-employ">
+        <form th:action="@{/home}" method="post" onsubmit="return confirmSubmission()">
+            <h3 class="mb-4">Đăng ký trở thành đối tác</h3>
+            <div class="mb-3">
+                <label for="name" class="form-label">Họ tên :</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="number" class="form-label">Số điện thoại :</label>
+                <input type="number" class="form-control" id="number" name="number" required>
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">Tuổi</label>
+                <select class="form-select" id="age" name="age" required>
+                    <option value="" disabled selected></option>
+                    <script>
+                        for (let i = 18; i <= 60; i++) {
+                            document.write('<option value="' + i + '">' + i + '</option>');
+                        }
+                    </script>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Đăng ký nhận việc</button>
+        </form>
+    </section>
+
+    <img th:src="@{/image/logo2.png}" class="logo2" alt="Logo 2">
+</main>
+
+<h2 class="title-service">Tất cả những tiện ích gia đình mà bạn cần</h2>
+<div class="service">
+    <div class="item">
+        <img th:src="@{'https://www.btaskee.com/wp-content/uploads/2020/11/chon-dich-vu-deep-cleaning.png'}" alt="Tổng vệ sinh" />
+        <h4>Tổng vệ sinh</h4>
+        <p>Giờ đây công việc dọn dẹp không còn là nỗi bận tâm, bạn sẽ có nhiều thời gian nghỉ ngơi và tận hưởng cuộc sống.</p>
+    </div>
+    <div class="item">
+        <img th:src="@{'https://www.btaskee.com/wp-content/uploads/2020/11/chon-dich-vu-grocery.png'}" alt="Đi chợ" />
+        <h4>Đi chợ</h4>
+        <p>Việc mua sắm thực phẩm và đồ dùng gia đình trở nên tiện lợi hơn bao giờ hết. Giao hàng tận nơi chỉ sau 1 giờ.</p>
+    </div>
+    <div class="item">
+        <img th:src="@{'https://www.btaskee.com/wp-content/uploads/2020/11/chon-dich-vu-laundry.png'}" alt="Giặt ủi" />
+        <h4>Giặt ủi</h4>
+        <p>Giúp bạn làm sạch quần áo nhanh chóng, cùng tiện ích giao nhận tận nơi.</p>
+    </div>
+    <div class="item">
+        <img th:src="@{'https://www.btaskee.com/wp-content/uploads/2020/11/chon-dich-vu-home-cooking.png'}" alt="Nấu ăn gia đình" />
+        <h4>Nấu ăn gia đình</h4>
+        <p>Mang đến bữa ăn gia đình ấm áp, tròn vị mỗi khi cuộc sống quá bận rộn.</p>
+    </div>
+</div>
+
+<footer>
+    <img class="logo" th:src="@{/image/logo.png}" alt="Logo">
+    <h2>NHÀN TÊNH</h2>
+    <div>
+        <h5>Công ty TNHH Ba thành viên</h5>
+        <p><strong>Email:</strong> bathanhvien@gmail.com</p>
+        <p><strong>Hotline:</strong> 1122334455</p>
+    </div>
+</footer>
+
+<script th:src="@{/js/home.js}"></script>
 </body>
 </html>

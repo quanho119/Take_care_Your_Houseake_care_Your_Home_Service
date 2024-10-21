@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Details</h2>
+<p th:text="${employee.name}"></p>
+<p th:text="${employee.fullName}"></p>
+<p th:text="${employee.phoneNumber}"></p>
+<p th:text="${employee.email}"></p>
+<p th:text="${employee.address}"></p>
+<p th:text="${employee.bio}"></p>
+<p th:text="${employee.hourlyRate}+'$/hour'"></p>
+<p th:text="${employee.status ? 'Active' : 'Inactive'}"></p>
+
+</body>
+</html>
