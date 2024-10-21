@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin List</title>
+</head>
+<body>
+
+<h2>Admins List</h2>
+
+<form action="/admins/search" method="get">
+  <label for="keyword">Search:</label>
+  <br>
+  <input type="text" id="keyword" name="keyword">
+  <input type="submit" value="Search">
+</form>
+<br>
+<a href="/admins/create">Create New Admin</a>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Full Name</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr th:each="admin, iterStat : ${admins}">
+    <td th:text="${iterStat.index + 1}"></td>
+    <td th:text="${admin.username}"></td>
+    <td th:text="${admin.fullName}"></td>
+    <td th:text="${admin.email}"></td>
+    <td th:text="${admin.phoneNumber}"></td>
+    <td>
+      <a th:href="@{/admins/{id}/update(id=${admin.id})}">Update</a> |
+      <a th:href="@{/admins/{id}/delete(id=${admin.id})}">Delete</a> |
+      <a th:href="@{/admins/{id}/details(id=${admin.id})}">Full details</a>
+    </td>
+  </tr>
+
+</table>
+
+</body>
+</html>

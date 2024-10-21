@@ -58,20 +58,3 @@ header h2 {
     background-color: #FEE469;
     color: black;
 }
-footer{
-    background-color: black;
-    width : 100%;
-    height: 130px;
-    display: flex;
-    align-items: center;
-}
-footer h2 {
-    color:#FEE469 ;
-    font-size: 20px ;
-}
-footer div {
-    display: flex;
-    flex-direction: column;
-    color: white;
-    margin-left: 50px;
-}

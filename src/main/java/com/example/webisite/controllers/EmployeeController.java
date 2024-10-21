@@ -78,7 +78,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}/full")
-    public String customersFull(@PathVariable("id") Long id, Model model) {
+    public String EmployeeFull(@PathVariable("id") Long id, Model model) {
         Employee employee = employeeService.findEmployeeById(id);
         model.addAttribute("employee", employee);
         return "employees/full";
