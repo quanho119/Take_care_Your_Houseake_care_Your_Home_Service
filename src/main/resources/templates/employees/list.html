@@ -20,10 +20,6 @@
         <th>Name</th>
         <th>Full Name</th>
         <th>Phone Number</th>
-        <th>Email</th>
-        <th>Address</th>
-        <th>Bio</th>
-        <th>Hourly Rate</th>
         <th>Status</th>
         <th>Actions</th>
         <th>Booking</th>
@@ -34,26 +30,24 @@
         <td th:text="${employee.name}"></td>
         <td th:text="${employee.fullName}"></td>
         <td th:text="${employee.phoneNumber}"></td>
-        <td th:text="${employee.email}"></td>
-        <td th:text="${employee.address}"></td>
-        <td th:text="${employee.bio}"></td>
-        <td th:text="${employee.hourlyRate}+'$/hour'"></td>
         <td th:text="${employee.status ? 'Active' : 'Inactive'}"></td>
         <td>
             <a th:href="@{/employees/{id}/update(id=${employee.id})}">Update</a> |
-            <a th:href="@{/employees/{id}/delete(id=${employee.id})}">Delete</a>
+            <a th:href="@{/employees/{id}/delete(id=${employee.id})}">Delete</a> |
+            <a th:href="@{/employees/{id}/full(id=${employee.id})}">Full details</a>
         </td>
         <td th:switch="${employee.status}">
             <span th:case="true">
-                <a th:href="@{/employees/{id}/book(id=${employee.id})}">Book</a>
+                <button><a th:href="@{/bookings/{id}/book(id=${employee.id})}">Book</a></button>
             </span>
             <span th:case="false">
-                <a th:href="@{/employees/{id}/activate(id=${employee.id})}">Cancel</a>
+                <button th:disabled="${employee.status == false}">Book</button>
             </span>
             <span th:case="*">
                 <span>Unknown Status</span>
             </span>
         </td>
+
     </tr>
 
 </table>

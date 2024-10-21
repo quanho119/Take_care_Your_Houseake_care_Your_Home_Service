@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Service Booking</title>
+</head>
+<body>
+
+<h2>Update Service Booking</h2>
+<form action="/bookings/update" method="post" th:object="${booking}">
+    <input type="hidden" th:field="*{id}" name="bookingId">
+
+    <input type="hidden" th:field="*{employee.id}" name="employeeId">
+    <label for="serviceType">Service Type:</label>
+    <br>
+    <select id="serviceType" th:field="*{service.id}">
+        <option th:each="service : ${services}"
+                th:value="${service.id}"
+                th:selected="${service.id == booking.service.id}"
+                th:text="${service.name}">Service Name</option>
+    </select>
+    <br>
+    <label for="bookingDate">Booking Date:</label>
+    <br>
+    <input type="date" id="bookingDate" th:field="*{bookingDate}">
+    <br>
+    <label for="startTime">Start Time:</label>
+    <br>
+    <input type="time" id="startTime" th:field="*{startTime}">
+    <br>
+    <label for="endTime">Service End Time:</label>
+    <br>
+    <input type="time" id="endTime" th:field="*{endTime}">
+    <br>
+    <input type="submit" value="Update Booking">
+    <a href="/bookings/">Cancel</a>
+</form>
+
+</body>
+</html>

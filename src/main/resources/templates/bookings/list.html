@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking List</title>
+</head>
+<body>
+<h2>Booking List</h2>
+<form action="/bookings/search" method="get">
+    <label for="keyword">Search:</label>
+    <br>
+    <input type="text" id="keyword" name="keyword">
+    <input type="submit" value="Search">
+</form>
+<br>
+<a href="/bookings/create">Create Booking</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>Service Type</th>
+        <th>Booking Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr th:each="booking, iterStat : ${bookings}">
+        <td th:text="${iterStat.index + 1}"></td>
+        <td th:text="${booking.employee.fullName}"></td>
+        <td th:text="${booking.service.name}"></td>
+        <td th:text="${#dates.format(booking.bookingDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${booking.startTime}"></td>
+        <td th:text="${booking.endTime}"></td>
+        <td th:text="${booking.status ? 'Confirmed' : 'Pending'}"></td>
+        <td>
+            <a th:href="@{/bookings/{id}/update(id=${booking.id})}">Update</a> |
+            <a th:href="@{/bookings/{id}/delete(id=${booking.id})}">Delete</a> |
+            <a th:href="@{/bookings/{id}/details(id=${booking.id})}">View Details</a>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>
