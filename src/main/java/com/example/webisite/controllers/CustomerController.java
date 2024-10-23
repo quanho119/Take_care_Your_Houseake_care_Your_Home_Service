@@ -71,29 +71,4 @@ public class CustomerController {
         return "customers/full";
     }
 
-//    @GetMapping("/{id}/book")
-//    public String renderBookPage(@PathVariable("id") long id, Model model) {
-//        Customer customer = customerService.findCustomerById(id);
-//        List<Service> services = serviceService.getAllServices();
-//        model.addAttribute("customer", customer);
-//        model.addAttribute("services", services);
-//        model.addAttribute("booking", new Booking());
-//        return "customers/booking";
-//    }
-//
-//    @PostMapping("/book")
-//    public String bookCustomer(@RequestParam("customerId") Long id, @ModelAttribute("booking") Booking booking, Model model) {
-//        Customer customer = customerService.findCustomerById(id);
-//        customer.setStatus(false);
-//        this.customerService.updateCustomer(customer);
-//        return "redirect:/customers";
-//    }
-//
-//    @GetMapping("/{id}/cancel")
-//    public String cancelBooking(@PathVariable("id") long id) {
-//        Customer customer = customerService.findCustomerById(id);
-//        customer.setStatus(true);
-//        this.customerService.updateCustomer(customer);
-//        return "redirect:/customers";
-//    }
 }

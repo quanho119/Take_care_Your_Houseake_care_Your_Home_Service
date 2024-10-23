@@ -1,11 +1,11 @@
 package com.example.webisite.models;
 
 import jakarta.persistence.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,15 +21,47 @@ public class Customer {
     private String email;
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Booking> bookings;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Booking> bookings = new ArrayList<>(); // Khởi tạo danh sách
 
     public Long getId() {
         return id;
     }
 
     public void setId(Long customerId) {
-        this.id = id;
+        this.id = customerId; // Sửa lại từ customerId sang id
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+        for (Booking booking : bookings) { // Cập nhật customer cho mỗi booking
+            booking.setCustomer(this);
+        }
+    }
+
+    public void addBooking(Booking booking) {
+        this.bookings.add(booking);
+        booking.setCustomer(this); // Thiết lập customer cho booking
     }
 
     public String getFullName() {

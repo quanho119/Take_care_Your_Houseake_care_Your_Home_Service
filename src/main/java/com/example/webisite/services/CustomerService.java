@@ -39,4 +39,9 @@ public class CustomerService implements ICustomerService {
     public Customer findCustomerById(Long id) {
         return this.customerRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Customer findCustomerByUsername(String name) {
+        return this.customerRepository.findCustomerByName(name);
+    }
 }

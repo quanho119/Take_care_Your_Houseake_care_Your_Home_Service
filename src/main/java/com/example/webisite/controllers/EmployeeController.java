@@ -60,8 +60,21 @@ public class EmployeeController {
     @PostMapping("/update")
     public String updateEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.updateEmployee(employee);
+        System.out.println(employee.getId());
         return "redirect:/employees";
     }
+
+//    @PostMapping("/update")
+//    public String updateEmployee(@ModelAttribute("employee") Employee employee, Model model) {
+//        try {
+//            employeeService.updateEmployee(employee);
+//            return "redirect:/employees";
+//        } catch (IllegalArgumentException e) {
+//            model.addAttribute("errorMessage", "Username already exists.");
+//            return "employees/update";
+//        }
+//    }
+
 
     @GetMapping("/{id}/delete")
     public String DeleteEmployee(@PathVariable("id") Long id) {
@@ -83,30 +96,4 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         return "employees/full";
     }
-//    @GetMapping("/{id}/book")
-//    public String renderBookPage(@PathVariable("id") long id, Model model) {
-//        Employee employee = employeeService.findEmployeeById(id);
-//        List<Service> services = serviceService.getAllServices();
-//        model.addAttribute("employee", employee);
-//        model.addAttribute("services", services);
-//        model.addAttribute("booking", new Booking());
-//        return "employees/booking";
-//    }
-//
-//    @PostMapping("/book")
-//    public String bookEmployee(@RequestParam("employeeId") Long id, @ModelAttribute("booking")Booking booking, Model model) {
-//        Employee employee = employeeService.findEmployeeById(id);
-//
-//        employee.setStatus(false);
-//        this.employeeService.updateEmployee(employee);
-//        return "redirect:/employees";
-//    }
-//
-//    @GetMapping("/{id}/cancel")
-//    public String cancelBooking(@PathVariable("id") long id) {
-//        Employee employee = employeeService.findEmployeeById(id);
-//        employee.setStatus(true);
-//        this.employeeService.updateEmployee(employee);
-//        return "redirect:/employees";
-//    }
 }
