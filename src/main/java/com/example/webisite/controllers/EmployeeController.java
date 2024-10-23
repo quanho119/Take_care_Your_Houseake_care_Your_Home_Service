@@ -60,21 +60,8 @@ public class EmployeeController {
     @PostMapping("/update")
     public String updateEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.updateEmployee(employee);
-        System.out.println(employee.getId());
         return "redirect:/employees";
     }
-
-//    @PostMapping("/update")
-//    public String updateEmployee(@ModelAttribute("employee") Employee employee, Model model) {
-//        try {
-//            employeeService.updateEmployee(employee);
-//            return "redirect:/employees";
-//        } catch (IllegalArgumentException e) {
-//            model.addAttribute("errorMessage", "Username already exists.");
-//            return "employees/update";
-//        }
-//    }
-
 
     @GetMapping("/{id}/delete")
     public String DeleteEmployee(@PathVariable("id") Long id) {

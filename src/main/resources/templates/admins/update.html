@@ -3,35 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container::before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/image/logo2.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        button {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<h2>Update Admin</h2>
-<form th:action="@{/admins/update}" th:object="${admin}" method="post">
-    <input type="hidden" th:field="*{id}" name="adminId">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" th:field="*{username}" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" required>
-    </div>
-    <div>
-        <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" th:field="*{fullName}" required>
-    </div>
-    <div>
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required>
-    </div>
-    <div>
-        <button type="submit">Update Admin</button>
-    </div>
-</form>
-<a href="/admins">Back to Admin List</a>
+<div th:replace="fragment :: siteHeader(~{::link})"></div>
+<div class="form-container">
+    <h2>Update Admin</h2>
+    <form th:action="@{/admins/update}" th:object="${admin}" method="post">
+        <input type="hidden" th:field="*{id}" name="adminId">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" th:field="*{username}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}" required>
+        </div>
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" class="form-control" id="fullName" th:field="*{fullName}" required>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Admin</button>
+    </form>
+    <a href="/admins" class="btn btn-link">Back to Admin List</a>
+</div>
+<div th:replace="fragment :: siteFooter(~{::link})"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

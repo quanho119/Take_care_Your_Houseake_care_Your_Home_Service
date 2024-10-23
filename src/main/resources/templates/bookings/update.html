@@ -2,39 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Update Service Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container{
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container ::before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/image/logo2.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
+<div th:replace="fragment :: siteHeader((~{::link}))"></div>
+<div class="container mt-4" style="width: 600px;">
+    <h2 class="mb-4">Update Service Booking</h2>
+    <form action="/bookings/update" method="post" th:object="${booking}" class="form-group">
+        <input type="hidden" th:field="*{id}" name="bookingId">
+        <input type="hidden" th:field="*{employee.id}" name="employeeId">
 
-<h2>Update Service Booking</h2>
-<form action="/bookings/update" method="post" th:object="${booking}">
-    <input type="hidden" th:field="*{id}" name="bookingId">
+        <div class="mb-3">
+            <label for="serviceType" class="form-label">Service Type:</label>
+            <select id="serviceType" th:field="*{service.id}" class="form-select">
+                <option th:each="service : ${services}"
+                        th:value="${service.id}"
+                        th:selected="${service.id == booking.service.id}"
+                        th:text="${service.name}">Service Name</option>
+            </select>
+        </div>
 
-    <input type="hidden" th:field="*{employee.id}" name="employeeId">
-    <label for="serviceType">Service Type:</label>
-    <br>
-    <select id="serviceType" th:field="*{service.id}">
-        <option th:each="service : ${services}"
-                th:value="${service.id}"
-                th:selected="${service.id == booking.service.id}"
-                th:text="${service.name}">Service Name</option>
-    </select>
-    <br>
-    <label for="bookingDate">Booking Date:</label>
-    <br>
-    <input type="date" id="bookingDate" th:field="*{bookingDate}">
-    <br>
-    <label for="startTime">Start Time:</label>
-    <br>
-    <input type="time" id="startTime" th:field="*{startTime}">
-    <br>
-    <label for="endTime">Service End Time:</label>
-    <br>
-    <input type="time" id="endTime" th:field="*{endTime}">
-    <br>
-    <input type="submit" value="Update Booking">
-    <a href="/bookings/">Cancel</a>
-</form>
+        <div class="mb-3">
+            <label for="bookingDate" class="form-label">Booking Date:</label>
+            <input type="date" id="bookingDate" th:field="*{bookingDate}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="startTime" class="form-label">Start Time:</label>
+            <input type="time" id="startTime" th:field="*{startTime}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="endTime" class="form-label">Service End Time:</label>
+            <input type="time" id="endTime" th:field="*{endTime}" class="form-control">
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Update Booking" class="btn btn-primary">
+            <a href="/bookings/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+<div th:replace="fragment :: siteFooter((~{::link}))"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
