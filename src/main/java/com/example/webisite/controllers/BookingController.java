@@ -1,11 +1,15 @@
 package com.example.webisite.controllers;
 
+import ch.qos.logback.core.LayoutBase;
 import com.example.webisite.models.Booking;
+import com.example.webisite.models.Customer;
 import com.example.webisite.models.Employee;
 import com.example.webisite.models.Service;
 import com.example.webisite.services.imple.IBookingService;
+import com.example.webisite.services.imple.ICustomerService;
 import com.example.webisite.services.imple.IEmployeeService;
 import com.example.webisite.services.imple.IServiceService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
@@ -23,10 +27,14 @@ public class BookingController {
 
     @Autowired
     private IBookingService bookingService;
-    public BookingController(IEmployeeService employeeService, IServiceService serviceService, IBookingService bookingService) {
+
+    @Autowired
+    private ICustomerService customerService;
+    public BookingController(IEmployeeService employeeService, IServiceService serviceService, IBookingService bookingService, ICustomerService customerService) {
         this.employeeService = employeeService;
         this.serviceService = serviceService;
         this.bookingService = bookingService;
+        this.customerService = customerService;
     }
 
     @GetMapping("")
@@ -36,22 +44,50 @@ public class BookingController {
         return "bookings/list";
     }
 
-    @GetMapping("/{id}/book")
-    public String renderBookPage(@PathVariable("id") long id, Model model) {
-        Employee employee = employeeService.findEmployeeById(id);
+    @GetMapping("/create")
+    public String renderCreateBookingPage(Model model) {
+
+        Booking booking = new Booking();
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//
+//        Customer loggedCustomer = customerService.findCustomerByUsername(username);
+        Customer loggedCustomer = customerService.findCustomerById(1L);
+        booking.setCustomer(loggedCustomer);
+        List<Employee> employees = employeeService.getAllEmployees();
         List<Service> services = serviceService.getAllServices();
-        model.addAttribute("employee", employee);
+        model.addAttribute("employees", employees);
         model.addAttribute("services", services);
-        model.addAttribute("booking", new Booking());
+        model.addAttribute("booking", booking);
         return "bookings/create";
     }
 
-    @PostMapping("/book")
+    @GetMapping("/{id}/create")
+    public String renderBookPage(@PathVariable("id") long id, Model model) {
+        Booking booking = new Booking();
+        Employee employee = employeeService.findEmployeeById(id);
+        List<Service> services = serviceService.getAllServices();
+        Customer loggedCustomer = customerService.findCustomerById(1L);
+        booking.setCustomer(loggedCustomer);
+        model.addAttribute("employee", employee);
+        model.addAttribute("services", services);
+        model.addAttribute("booking", booking);
+        return "bookings/create";
+    }
+
+    @PostMapping("/create")
     public String bookEmployee(@ModelAttribute("booking")Booking booking, Model model) {
-        bookingService.createBooking(booking);
         Employee employee = employeeService.findEmployeeById(booking.getEmployee().getId());
         employee.setStatus(false);
+        employee.getBookings().add(booking);
         this.employeeService.updateEmployee(employee);
+        Customer customer = customerService.findCustomerById(booking.getCustomer().getId());
+        customer.getBookings().add(booking);
+        customerService.updateCustomer(customer);
+        booking.setEmployee(employee);
+        booking.setCustomer(customer);
+        bookingService.createBooking(booking);
         return "redirect:/bookings";
     }
 
@@ -68,7 +104,23 @@ public class BookingController {
     @GetMapping("/{id}/update")
     public String renderUpdatePage(@PathVariable("id") long id, Model model) {
         Booking booking = bookingService.findBookingById(id);
+        Employee employee = employeeService.findEmployeeById(id);
+        List<Service> services = serviceService.getAllServices();
         model.addAttribute("booking", booking);
+        model.addAttribute("employee", employee);
+        model.addAttribute("services", services);
         return "bookings/update";
     }
+
+//    @PostMapping("/{id}/update")
+//    public String updateBooking(@PathVariable("id") long id, @ModelAttribute("booking") Booking booking) {
+//        Booking bookingToUpdate = bookingService.findBookingById(id);
+//        bookingToUpdate.setEmployee(booking.getEmployee());
+//        bookingToUpdate.setService(booking.getService());
+//        bookingToUpdate.setStartDate(booking.getStartDate());
+//        bookingToUpdate.setEndDate(booking.getEndDate());
+//        bookingToUpdate.setTotalPrice(booking.getTotalPrice());
+//        bookingService.updateBooking(bookingToUpdate);
+//        return "redirect:/bookings";
+//    }
 }

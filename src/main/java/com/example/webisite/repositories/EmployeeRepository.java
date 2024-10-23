@@ -9,4 +9,5 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findByNameContaining(String keyword);
     List<Employee> findByPhoneNumberContainingOrNameContaining(String keyword1, String keyword2);
+
 }

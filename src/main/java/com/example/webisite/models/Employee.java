@@ -119,4 +119,7 @@ public class Employee {
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
+    public void addBooking(Booking bookings) {
+        this.bookings.add(bookings);
+    }
 }

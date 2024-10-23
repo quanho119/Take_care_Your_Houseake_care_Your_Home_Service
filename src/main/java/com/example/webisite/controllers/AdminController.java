@@ -59,10 +59,5 @@ public class AdminController {
     }
 
 
-    @GetMapping("/{id}/full")
-    public String adminFull(@PathVariable("id") Long id, Model model) {
-        Admin admin = adminService.findAdminById(id);
-        model.addAttribute("admin", admin);
-        return "admins/full";
-    }
+
 }

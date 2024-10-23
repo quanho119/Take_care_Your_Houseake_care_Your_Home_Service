@@ -8,13 +8,6 @@
 
 <h2>Admins List</h2>
 
-<form action="/admins/search" method="get">
-  <label for="keyword">Search:</label>
-  <br>
-  <input type="text" id="keyword" name="keyword">
-  <input type="submit" value="Search">
-</form>
-<br>
 <a href="/admins/create">Create New Admin</a>
 
 <table>
@@ -35,8 +28,7 @@
     <td th:text="${admin.phoneNumber}"></td>
     <td>
       <a th:href="@{/admins/{id}/update(id=${admin.id})}">Update</a> |
-      <a th:href="@{/admins/{id}/delete(id=${admin.id})}">Delete</a> |
-      <a th:href="@{/admins/{id}/details(id=${admin.id})}">Full details</a>
+      <a th:href="@{/admins/{id}/delete(id=${admin.id})}">Delete</a>
     </td>
   </tr>
 

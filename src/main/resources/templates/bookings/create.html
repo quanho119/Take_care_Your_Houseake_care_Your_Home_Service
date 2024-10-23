@@ -5,15 +5,31 @@
     <title>Service Booking</title>
 </head>
 <body>
-
 <h2>Service Booking</h2>
-<form action="/bookings/book" method="post" th:object="${booking}">
-    <input type="hidden" th:field="*{employee.id}" name="employeeId">
+<form action="/bookings/create" method="post" th:object="${booking}">
+    <input type="hidden" th:field="*{customer.id}">
 
+    <label for="employee">Employee:</label>
+    <!-- Nếu employee không null, hiển thị một input text cố định -->
+    <div th:if="${employee != null}">
+        <span id="employee" th:text="${employee.fullName}"></span>
+        <input type="hidden" th:field="*{employee.id}">
+    </div>
+
+    <!-- Nếu employee là null, hiển thị dropdown để chọn nhân viên -->
+    <div th:unless="${employee != null}">
+        <select id="employee" th:field="*{employee.id}" required>
+            <option th:each="emp : ${employees}"
+                    th:value="${emp.id}"
+                    th:text="${emp.fullName}">Select Employee</option>
+        </select>
+    </div>
+
+    <br>
 
     <label for="serviceType">Service Type:</label>
     <br>
-    <select id="serviceType" th:field="*{service.id}">
+    <select id="serviceType" th:field="*{service.id}" required>
         <option th:each="service : ${services}"
                 th:value="${service.id}"
                 th:text="${service.name}">Service Name</option>
@@ -22,17 +38,17 @@
 
     <label for="bookingDate">Booking Date:</label>
     <br>
-    <input type="date" id="bookingDate" th:field="*{bookingDate}">
+    <input type="date" id="bookingDate" th:field="*{bookingDate}" required>
     <br>
 
     <label for="startTime">Start Time:</label>
     <br>
-    <input type="time" id="startTime" th:field="*{startTime}">
+    <input type="time" id="startTime" th:field="*{startTime}" required>
     <br>
 
     <label for="endTime">Service End Time:</label>
     <br>
-    <input type="time" id="endTime" th:field="*{endTime}">
+    <input type="time" id="endTime" th:field="*{endTime}" required>
     <br>
 
     <input type="submit" value="Book Service">
