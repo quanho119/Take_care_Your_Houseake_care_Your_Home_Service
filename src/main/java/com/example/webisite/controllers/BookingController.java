@@ -77,26 +77,23 @@ public class BookingController {
     }
 
     @PostMapping("/create")
-    public String bookEmployee(@ModelAttribute("booking")Booking booking, Model model) {
+    public String bookEmployee(@ModelAttribute("booking") Booking booking, Model model) {
         Employee employee = employeeService.findEmployeeById(booking.getEmployee().getId());
-        employee.setStatus(false);
-        employee.getBookings().add(booking);
-        this.employeeService.updateEmployee(employee);
         Customer customer = customerService.findCustomerById(booking.getCustomer().getId());
-        customer.getBookings().add(booking);
-        customerService.updateCustomer(customer);
+        employee.setStatus(false);
         booking.setEmployee(employee);
         booking.setCustomer(customer);
         bookingService.createBooking(booking);
+
         return "redirect:/bookings";
     }
 
     @GetMapping("/{id}/delete")
     public String cancelBooking(@PathVariable("id") long id) {
-        Employee employee = employeeService.findEmployeeById(id);
+        Booking booking = bookingService.findBookingById(id);
+        Employee employee = booking.getEmployee();
         employee.setStatus(true);
         this.employeeService.updateEmployee(employee);
-        Booking booking = bookingService.findBookingById(id);
         bookingService.deleteBooking(booking);
         return "redirect:/bookings";
     }
@@ -112,15 +109,14 @@ public class BookingController {
         return "bookings/update";
     }
 
-//    @PostMapping("/{id}/update")
-//    public String updateBooking(@PathVariable("id") long id, @ModelAttribute("booking") Booking booking) {
-//        Booking bookingToUpdate = bookingService.findBookingById(id);
-//        bookingToUpdate.setEmployee(booking.getEmployee());
-//        bookingToUpdate.setService(booking.getService());
-//        bookingToUpdate.setStartDate(booking.getStartDate());
-//        bookingToUpdate.setEndDate(booking.getEndDate());
-//        bookingToUpdate.setTotalPrice(booking.getTotalPrice());
-//        bookingService.updateBooking(bookingToUpdate);
-//        return "redirect:/bookings";
-//    }
+    @PostMapping("/update")
+    public String updateBooking(@ModelAttribute("booking") Booking booking) {
+        Employee employee = employeeService.findEmployeeById(booking.getEmployee().getId());
+        Customer customer = customerService.findCustomerById(booking.getCustomer().getId());
+        employee.setStatus(false);
+        booking.setEmployee(employee);
+        booking.setCustomer(customer);
+        bookingService.updateBooking(booking);
+        return "redirect:/bookings";
+    }
 }

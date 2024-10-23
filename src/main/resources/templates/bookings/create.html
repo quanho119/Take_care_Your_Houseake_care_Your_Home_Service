@@ -2,58 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Service Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container{
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container ::before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/image/logo2.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-<h2>Service Booking</h2>
-<form action="/bookings/create" method="post" th:object="${booking}">
-    <input type="hidden" th:field="*{customer.id}">
+<div th:replace="fragment :: siteHeader((~{::link}))"></div>
+<div class="container mt-4" style="width: 600px;">
+    <h2 class="mb-4">Service Booking</h2>
+    <form action="/bookings/create" method="post" th:object="${booking}" class="form-group">
+        <input type="hidden" th:field="*{customer.id}">
 
-    <label for="employee">Employee:</label>
-    <!-- Nếu employee không null, hiển thị một input text cố định -->
-    <div th:if="${employee != null}">
-        <span id="employee" th:text="${employee.fullName}"></span>
-        <input type="hidden" th:field="*{employee.id}">
-    </div>
+        <div class="mb-3">
+            <label for="employee" class="form-label">Employee:</label>
+            <!-- Nếu employee không null, hiển thị một input text cố định -->
+            <div th:if="${employee != null}">
+                <span id="employee" th:text="${employee.fullName}" class="form-control-plaintext"></span>
+                <input type="hidden" th:field="*{employee.id}">
+            </div>
 
-    <!-- Nếu employee là null, hiển thị dropdown để chọn nhân viên -->
-    <div th:unless="${employee != null}">
-        <select id="employee" th:field="*{employee.id}" required>
-            <option th:each="emp : ${employees}"
-                    th:value="${emp.id}"
-                    th:text="${emp.fullName}">Select Employee</option>
-        </select>
-    </div>
+            <!-- Nếu employee là null, hiển thị dropdown để chọn nhân viên -->
+            <div th:unless="${employee != null}">
+                <select id="employee" th:field="*{employee.id}" class="form-select" required>
+                    <option th:each="emp : ${employees}"
+                            th:value="${emp.id}"
+                            th:text="${emp.fullName}">Select Employee</option>
+                </select>
+            </div>
+        </div>
 
-    <br>
+        <div class="mb-3">
+            <label for="serviceType" class="form-label">Service Type:</label>
+            <select id="serviceType" th:field="*{service.id}" class="form-select" required>
+                <option th:each="service : ${services}"
+                        th:value="${service.id}"
+                        th:text="${service.name}">Service Name</option>
+            </select>
+        </div>
 
-    <label for="serviceType">Service Type:</label>
-    <br>
-    <select id="serviceType" th:field="*{service.id}" required>
-        <option th:each="service : ${services}"
-                th:value="${service.id}"
-                th:text="${service.name}">Service Name</option>
-    </select>
-    <br>
+        <div class="mb-3">
+            <label for="bookingDate" class="form-label">Booking Date:</label>
+            <input type="date" id="bookingDate" th:field="*{bookingDate}" class="form-control" required>
+        </div>
 
-    <label for="bookingDate">Booking Date:</label>
-    <br>
-    <input type="date" id="bookingDate" th:field="*{bookingDate}" required>
-    <br>
+        <div class="mb-3">
+            <label for="startTime" class="form-label">Start Time:</label>
+            <input type="time" id="startTime" th:field="*{startTime}" class="form-control" required>
+        </div>
 
-    <label for="startTime">Start Time:</label>
-    <br>
-    <input type="time" id="startTime" th:field="*{startTime}" required>
-    <br>
+        <div class="mb-3">
+            <label for="endTime" class="form-label">Service End Time:</label>
+            <input type="time" id="endTime" th:field="*{endTime}" class="form-control" required>
+        </div>
 
-    <label for="endTime">Service End Time:</label>
-    <br>
-    <input type="time" id="endTime" th:field="*{endTime}" required>
-    <br>
-
-    <input type="submit" value="Book Service">
-    <a href="/bookings">Cancel</a>
-</form>
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Book Service" class="btn btn-primary">
+            <a href="/bookings" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+<div th:replace="fragment :: siteFooter((~{::link}))"></div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
