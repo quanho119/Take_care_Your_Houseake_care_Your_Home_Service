@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+
+<div th:replace="fragment :: siteHeader((~{::link}))"></div>
 <h2>employees list</h2>
 <form action="/employees/search" method="get">
     <label for="keyword">Search:</label>
@@ -51,5 +53,6 @@
     </tr>
 
 </table>
+<div th:replace="fragment :: siteFooter((~{::link}))"></div>
 </body>
 </html>

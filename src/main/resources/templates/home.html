@@ -9,19 +9,7 @@
     <script th:src="@{/js/home.js}"></script>
 </head>
 <body>
-
-<header>
-    <img class="logo" th:src="@{/image/logo.png}" alt="Logo">
-    <h2>NHÀN TÊNH</h2>
-    <nav>
-        <a th:href="@{/home}">TRANG CHỦ</a>
-        <a th:href="@{/employees}">NHÂN VIÊN</a>
-        <a href="#" onclick="confirmLogout()">
-            <i class="fas fa-sign-out-alt" style="color: white;"></i>
-        </a>
-    </nav>
-</header>
-
+<div th:replace="fragment :: siteHeader((~{::link}))"></div>
 <main>
     <section class="form-apply-employ">
         <form th:action="@{/home}" method="post" onsubmit="return confirmSubmission()">
@@ -50,6 +38,10 @@
     </section>
 
     <img th:src="@{/image/logo2.png}" class="logo2" alt="Logo 2">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script th:src="@{/js/home.js}"></script>
 </main>
 
 <h2 class="title-service">Tất cả những tiện ích gia đình mà bạn cần</h2>
@@ -76,15 +68,7 @@
     </div>
 </div>
 
-<footer>
-    <img class="logo" th:src="@{/image/logo.png}" alt="Logo">
-    <h2>NHÀN TÊNH</h2>
-    <div>
-        <h5>Công ty TNHH Ba thành viên</h5>
-        <p><strong>Email:</strong> bathanhvien@gmail.com</p>
-        <p><strong>Hotline:</strong> 1122334455</p>
-    </div>
-</footer>
+<div th:replace="fragment :: siteFooter((~{::link}))"></div>
 
 <script th:src="@{/js/home.js}"></script>
 </body>
