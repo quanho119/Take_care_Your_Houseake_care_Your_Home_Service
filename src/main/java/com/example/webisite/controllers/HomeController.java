@@ -17,11 +17,9 @@ public class HomeController {
     public String logout() {
         return "redirect:/login";
     }
-    @PostMapping("")
-    public String handleRegistration(@RequestParam String name,
-                                     @RequestParam String number,
-                                     @RequestParam String age) {
-        return "redirect:/home";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
 }
